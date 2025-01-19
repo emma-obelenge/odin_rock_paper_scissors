@@ -2,12 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="./styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Odin Rock Paper Scissors Project</title>
 </head>
 <body>
-    <h1>Odin Rock Paper Scissors Project</h1>
-    <p>Blank Html document. Check the console for output</p>
+    <h1>Rock Paper Scissors Game</h1>
+    <div class="outer-container">
+        <div class="inner-container">
+            <div class="computer">
+                <p>Computer</p>
+                <div class="image" id="computer-img"></div>
+                <p>Score: <span id="computerScore"></span></p>
+            </div>
+            <p id="vs">VS</p>
+            <div class="human">
+                <p>UserName</p>
+                <div class="image" id="human-img"></div>
+                <p>Score: <span id="humanScore"></span></p>
+            </div>
+        </div>
+        <p>Click a button below and play 5 rounds</p>
+        <div class="buttons">
+            <button id="rock" value="rock">Rock</button>
+            <button id="paper" value="paper">Paper</button>
+            <button id="scissors" value="scissors">Scissors</button>
+        </div>  
+        <!-- <div class="announcement">
+            <h1>The End</h1>
+            <p id="win-or-lose">Win or Lose</p>
+            <button id="close-button">Close</button>
+
+        </div> -->
+    </div>
 </body>
 <script src="script.js"></script>
 </html>

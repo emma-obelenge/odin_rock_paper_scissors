@@ -1,28 +1,24 @@
 let humanScore = 0;
 let computerScore = 0;
 let attempt = 1;
+let humanChoice = "";
+let round = 5;
+
+// button DOM
+const rockButton = document.querySelector("#rock");
+const paperButton = document.querySelector("#paper");
+const scissorsButton = document.querySelector("#scissors");
+
+// score DOM
+const linkHumanScore = document.querySelector("#humanScore");
+const linkComputerScore = document.querySelector("#computerScore");
+
+// Image DOM
+const linkHumanImage = document.querySelector("#human-img");
+const linkComputerImage = document.querySelector("#computer-img");
 
 function getRandomNumber() {
     return Math.floor(Math.random() * 3) + 1;
-}
-
-function getHumanChoice () {
-    let humanChoice = prompt("Instruction: Enter your choice. Either Type: Rock or Paper or Scissors.");
-    if (humanChoice.toLowerCase() == "rock") {
-        return(humanChoice);
-    } else if (humanChoice.toLowerCase() == "paper") {
-        return(humanChoice);
-    } else if (humanChoice.toLowerCase() == "scissors") {
-        return(humanChoice);
-    } else {
-        if (attempt < 5) {
-            attempt++;
-            alert("Wrong choice. Kindly read the instruction again");
-            getHumanChoice();
-        } else {
-            alert("maximum attempt reached. Reload the Game!")
-        }
-    }
 }
 
 function getComputerChoice () {
@@ -44,66 +40,95 @@ function getComputerChoice () {
 function playRound(humanChoice, computerChoice) {
     switch (computerChoice) {
         case "Rock":
+            linkComputerImage.style.backgroundImage = 'url("./img/rock.png")';
             if (humanChoice == "rock") {
-                alert("It's a tigh! Rock draws Rock");
-                console.log("It's a tigh! Rock draws Rock");
+                linkHumanImage.style.backgroundImage = 'url("./img/rock.png")';
             } else if (humanChoice == "paper") {
+                linkHumanImage.style.backgroundImage = 'url("./img/paper.png")';
                 humanScore++;
-                alert("You win! Paper beats Rock");
-                console.log("You win! Paper beats Rock");
             } else {
+                linkHumanImage.style.backgroundImage = 'url("./img/scissors.png")';
                 computerScore++;
-                alert("You Lose! Rock beats Scissors");
-                console.log("You Lose! Rock beats Scissors");
             }
         break;
         case "Paper":
+            linkComputerImage.style.backgroundImage = 'url("./img/paper.png")';
             if (humanChoice == "rock") {
+                linkHumanImage.style.backgroundImage = 'url("./img/rock.png")';
                 computerScore++;
-                alert("You lose! Paper beats Rock");
-                console.log("You lose! Paper beats Rock");
             } else if (humanChoice == "paper") {
-                alert("It's a tigh! Paper draws Paper");
-                console.log("It's a tigh! Paper draws Paper");
+                linkHumanImage.style.backgroundImage = 'url("./img/paper.png")';
             } else {
+                linkHumanImage.style.backgroundImage = 'url("./img/scissors.png")';
                 humanScore++;
-                alert("You win! Scissors beats Paper");
-                console.log("You win! Scissors beats Paper");
             }
         break;
         case "Scissors":
+            linkComputerImage.style.backgroundImage = 'url("./img/scissors.png")';
             if (humanChoice == "rock") {
+                linkHumanImage.style.backgroundImage = 'url("./img/rock.png")';
                 humanScore++;
-                alert("You win! Rock beats Scissors");
-                console.log("You win! Rock beats Scissors");
             } else if (humanChoice == "paper") {
+                linkHumanImage.style.backgroundImage = 'url("./img/paper.png")';
                 computerScore++;
-                alert("You lose! Scissors beats Paper");
-                console.log("You lose! Scissors beats Paper");
             } else {
-                alert("It's a tigh! Scissors draws Scissors");
-                console.log("It's a tigh! Scissors draws Scissors");
+                linkHumanImage.style.backgroundImage = 'url("./img/scissors.png")';
             }
         break;
     }
 }
 
+function resetScores() {
+    humanScore = 0;
+    computerScore = 0;
+    round = 5;
+    linkHumanScore.textContent = parseInt(humanScore);
+    linkComputerScore.textContent = parseInt(computerScore);
+    linkHumanImage.style.backgroundImage = 'url("./img/user.png")';
+    linkComputerImage.style.backgroundImage = 'url("./img/computer.png")';
+}
+
 function playGame () {
-    for (let round = 5; round > 0; round--) {
-        const computerSelection = getComputerChoice();
-        const humanSelection = getHumanChoice();
-        playRound(humanSelection, computerSelection);
-    }
-    console.log("The End!!!");
-    if (computerScore > humanScore) {
-        console.log("Computer wins the Game with ", computerScore, " points.");
-        console.log("Your Score is ", humanScore, " points.");
-    } else if (humanScore > computerScore) {
-        console.log("You win the Game with ", humanScore, " points.");
-        console.log("Computer Score is ", computerScore, " points.");
+    if(round == 0) {
+        setTimeout(() => {
+            let computerWin = "Computer wins the Game with " + computerScore + " point."
+            let humanLose = "Your Score is " + humanScore + " point.";
+            let humanWin = "You win the Game with " + humanScore + " point."
+            let computerLose = "Computer Score is " + computerScore + " point.";
+
+            alert("The End!!!");
+            if (computerScore > humanScore) {
+                alert(computerWin);
+                alert(humanLose);
+            } else if (humanScore > computerScore) {
+                alert(humanWin);
+                alert(computerLose);
+            } else {
+                alert("Hurray, It's a draw Game!!!")
+            }
+            resetScores();
+        }, 700);
     } else {
-        console.log("Hurray, It's a draw Game!!!")
+        const computerSelection = getComputerChoice();
+        playRound(humanChoice, computerSelection);
+        linkHumanScore.textContent = parseInt(humanScore);
+        linkComputerScore.textContent = parseInt(computerScore);
+        round--;
     }
 }
 
-playGame();
+// event listeners:
+rockButton.addEventListener("click", () => {
+    humanChoice = rockButton.value;
+    playGame();
+})
+
+paperButton.addEventListener("click", () => {
+    humanChoice = paperButton.value;
+    playGame();
+})
+
+scissorsButton.addEventListener("click", () => {
+    humanChoice = scissorsButton.value;
+    playGame();
+})
